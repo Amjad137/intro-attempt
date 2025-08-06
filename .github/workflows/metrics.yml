@@ -1,0 +1,24 @@
+name: Metrics
+
+on:
+  schedule: 
+    - cron: "0 0 * * *"   # once a day at midnight UTC
+  workflow_dispatch:      # Allows manual runs
+
+jobs:
+  github-metrics:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout your repo
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Metrics step (provided by them)
+      - name: Metrics embed
+        uses: lowlighter/metrics@v3.34
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+          base: header, activity, community, repositories, metadata
+          plugin_contributors: yes
+          plugin_languages: yes
+          plugin_achievements: yes
